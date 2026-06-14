@@ -5,13 +5,9 @@ exports.handler = async (event) => {
 
   // 1단계: GitHub 로그인 페이지로 이동
   if (!code) {
-    const params = new URLSearchParams({
-      client_id: clientId,
-      scope: 'repo,user',
-    });
     return {
       statusCode: 302,
-      headers: { Location: `https://github.com/login/oauth/authorize?${params}` },
+      headers: { Location: `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=repo,user` },
       body: '',
     };
   }
