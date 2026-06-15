@@ -17,7 +17,8 @@ const {
 } = Astro.props;
 
 const fullTitle = title === '사무장 박영준' ? title : `${title} — 영준의 책장`;
-const siteUrl = 'https://youngjune.vercel.app'; // 배포 후 실제 URL로 교체
+// astro.config.mjs의 site 값(실제 배포 도메인)을 사용
+const siteUrl = (Astro.site?.href ?? 'https://samujangs-blog.vercel.app/').replace(/\/$/, '');
 const ogImage = image ? (image.startsWith('http') ? image : `${siteUrl}${image}`) : `${siteUrl}/image/hero-bg.png`;
 const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
 ---
