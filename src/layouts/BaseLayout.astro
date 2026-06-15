@@ -10,13 +10,13 @@ interface Props {
   type?: string;    // og:type (기본 'website', 글 페이지는 'article')
 }
 const {
-  title = '사무장 박영준',
-  description = '사무장 박영준의 개인 서재. 읽고 쓴 것들을 쌓아두는 곳.',
+  title = '작은 책방',
+  description = '사무장 박영준의 작은 책방. 읽고 쓴 것들을 쌓아두는 곳.',
   image,
   type = 'website',
 } = Astro.props;
 
-const fullTitle = title === '사무장 박영준' ? title : `${title} — 영준의 책장`;
+const fullTitle = title === '작은 책방' ? title : `${title} — 작은 책방`;
 // astro.config.mjs의 site 값(실제 배포 도메인)을 사용
 const siteUrl = (Astro.site?.href ?? 'https://samujangs-blog.vercel.app/').replace(/\/$/, '');
 const ogImage = image ? (image.startsWith('http') ? image : `${siteUrl}${image}`) : `${siteUrl}/image/hero-bg.png`;
@@ -41,7 +41,7 @@ const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
     <meta property="og:image" content={ogImage} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:locale" content="ko_KR" />
-    <meta property="og:site_name" content="영준의 책장" />
+    <meta property="og:site_name" content="작은 책방" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
