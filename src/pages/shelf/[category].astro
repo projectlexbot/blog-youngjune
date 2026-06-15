@@ -187,9 +187,22 @@ const books = seriesNames.map((name, i) => {
   .breadcrumb { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 0.75rem; }
   .breadcrumb a { color: var(--text-muted); }
   .breadcrumb a:hover { color: var(--accent); }
-  .page-title { font-size: 2rem; color: var(--text-main); margin-bottom: 0.4rem; }
+  .page-title { font-size: 2rem; color: var(--text-main); margin-bottom: 0.4rem; word-break: keep-all; overflow-wrap: break-word; }
   .page-meta { font-size: 0.88rem; color: var(--text-muted); }
   .empty { color: var(--text-muted); padding: 2rem 0; }
+
+  @media (max-width: 640px) {
+    .shelf-page { padding: 2.25rem 0 3rem; }
+    .page-header { margin-bottom: 1.75rem; padding-bottom: 1.1rem; }
+    .page-title { font-size: 1.5rem; }
+    .bookshelf-wrap { padding: 14px 14px 16px; }
+    .shelf-books { gap: 1rem 0.75rem; padding: 1.1rem 0.25rem 0.85rem; min-height: 150px; }
+    :global(.book-cover-letter) { font-size: 1.8rem; }
+    :global(.book-name) { font-size: 0.82rem; }
+    :global(.book-count) { font-size: 0.65rem; }
+    :global(.book-info) { margin-top: 0.55rem; }
+    :global(.book-item:hover) { transform: translateY(-8px) scale(1.03); }
+  }
 
   .bookshelf-wrap {
     background: #f8ede0;
