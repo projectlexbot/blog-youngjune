@@ -7,7 +7,6 @@ thumbnail: "/image/2026-06-07-8939-pq3n.jpg"
 bookCover: true
 description: "프롤로그"
 bookIntro: "IP만들기 프로젝트 1단계 로판을 써보자"
-draft: true
 ---
 
 덜컹-
