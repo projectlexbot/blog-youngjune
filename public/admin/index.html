@@ -168,9 +168,10 @@
   <div class="login-box">
     <h1>영준의 책장</h1>
     <p>글쓰기 관리자 화면</p>
-    <input type="password" id="pw-input" placeholder="비밀번호 입력" />
+    <input type="text" id="id-input" placeholder="아이디" autocomplete="username" />
+    <input type="password" id="pw-input" placeholder="비밀번호" autocomplete="current-password" />
     <button onclick="login()">로그인</button>
-    <div class="login-error" id="login-error">비밀번호가 틀렸습니다.</div>
+    <div class="login-error" id="login-error">아이디 또는 비밀번호가 틀렸습니다.</div>
   </div>
 </div>
 
@@ -290,6 +291,7 @@
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 <script>
   let pw = '';
+  let user = '';
   let easyMDE;
   let editorReady = false;          // EasyMDE 초기화 여부
   let editingFilename = null;       // 편집 중인 기존 글의 파일명 (새 글이면 null)
@@ -299,9 +301,11 @@
   const today = new Date().toISOString().slice(0, 10);
   document.getElementById('f-date').value = today;
 
-  // Enter 키로 로그인
-  document.getElementById('pw-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') login();
+  // Enter 키로 로그인 (아이디·비밀번호 칸 어디서든)
+  ['id-input', 'pw-input'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => {
+      if (e.key === 'Enter') login();
+    });
   });
 
   // 예약 발행 체크 시 날짜·시간 입력칸 표시
@@ -320,17 +324,19 @@
   });
 
   function login() {
+    const idInput = document.getElementById('id-input').value.trim();
     const input = document.getElementById('pw-input').value;
-    // 서버에 비밀번호만 검증 (action: 'check' — 저장소에 아무것도 커밋하지 않음)
+    // 서버에 아이디·비밀번호 검증 (action: 'check' — 저장소에 아무것도 커밋하지 않음)
     fetch('/api/cms', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: input, action: 'check' }),
+      body: JSON.stringify({ username: idInput, password: input, action: 'check' }),
     }).then(r => {
-      // 401이면 틀린 비번, 그 외는 성공
+      // 401이면 틀린 아이디/비번, 그 외는 성공
       if (r.status === 401) {
         document.getElementById('login-error').style.display = 'block';
       } else {
+        user = idInput;
         pw = input;
         document.getElementById('login-screen').style.display = 'none';
         showList();
@@ -378,7 +384,7 @@
       const res = await fetch('/api/cms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pw, upload: 'image', filename, content: base64 }),
+        body: JSON.stringify({ username: user, password: pw, upload: 'image', filename, content: base64 }),
       });
       const data = await res.json();
       if (res.ok && data.path) {
@@ -415,7 +421,7 @@
       const res = await fetch('/api/cms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pw, action: 'list' }),
+        body: JSON.stringify({ username: user, password: pw, action: 'list' }),
       });
       const data = await res.json();
       if (!res.ok) { wrap.innerHTML = '<div class="list-empty">목록을 불러오지 못했습니다.<br>' + (data.error || '') + '</div>'; return; }
@@ -466,7 +472,7 @@
       const res = await fetch('/api/cms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pw, action: 'get', filename: name }),
+        body: JSON.stringify({ username: user, password: pw, action: 'get', filename: name }),
       });
       const data = await res.json();
       if (!res.ok) { alert('글을 불러오지 못했습니다: ' + (data.error || '')); loadList(); return; }
@@ -611,7 +617,7 @@
       const res = await fetch('/api/cms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pw, upload: 'image', filename, content: base64 }),
+        body: JSON.stringify({ username: user, password: pw, upload: 'image', filename, content: base64 }),
       });
       const data = await res.json();
       if (res.ok && data.path) {
@@ -704,7 +710,7 @@
       const res = await fetch('/api/cms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pw, filename, content }),
+        body: JSON.stringify({ username: user, password: pw, filename, content }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -735,12 +741,14 @@
 
   function logout() {
     pw = '';
+    user = '';
     editingFilename = null;
     clearThumb();
     document.getElementById('editor-screen').style.display = 'none';
     document.getElementById('list-screen').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('pw-input').value = '';
+    document.getElementById('id-input').value = '';
   }
 </script>
 </body>

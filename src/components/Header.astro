@@ -32,6 +32,9 @@ const current = Astro.url.pathname;
             </a>
           </li>
         ))}
+        <li>
+          <a href="/admin" class="nav-link nav-admin">🔒 관리자</a>
+        </li>
       </ul>
     </nav>
 
@@ -46,6 +49,7 @@ const current = Astro.url.pathname;
       {sections.map(section => (
         <li><a href={`/shelf/${section}`} class="mobile-nav-link">{section}</a></li>
       ))}
+      <li><a href="/admin" class="mobile-nav-link mobile-nav-admin">🔒 관리자</a></li>
     </ul>
   </div>
 </header>
@@ -119,6 +123,25 @@ const current = Astro.url.pathname;
   .nav-link.active {
     color: var(--accent);
     background: var(--accent-bg);
+  }
+
+  /* 관리자 버튼 — 외곽선 강조로 일반 메뉴와 구분 */
+  .nav-admin {
+    margin-left: 0.35rem;
+    border: 1.5px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+  .nav-admin:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-bg);
+  }
+  .mobile-nav-admin {
+    margin-top: 0.35rem;
+    border-top: 1px solid var(--border-soft);
+    padding-top: 0.7rem;
+    color: var(--text-muted);
   }
 
   .menu-toggle {

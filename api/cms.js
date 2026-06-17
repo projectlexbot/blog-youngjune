@@ -17,10 +17,16 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: '잘못된 요청입니다.' });
   }
 
-  const { password, filename, content, upload, action } = body;
+  const { username, password, filename, content, upload, action } = body;
 
+  // 비밀번호 검증 (필수)
   if (!process.env.ADMIN_PASSWORD || password !== process.env.ADMIN_PASSWORD) {
-    return res.status(401).json({ error: '비밀번호가 틀렸습니다.' });
+    return res.status(401).json({ error: '아이디 또는 비밀번호가 틀렸습니다.' });
+  }
+  // 아이디 검증 — ADMIN_USERNAME 환경변수가 설정된 경우에만 추가로 확인.
+  // (설정 안 했으면 기존처럼 비밀번호만으로 동작 → 잠김 방지)
+  if (process.env.ADMIN_USERNAME && username !== process.env.ADMIN_USERNAME) {
+    return res.status(401).json({ error: '아이디 또는 비밀번호가 틀렸습니다.' });
   }
 
   // ── 비밀번호 확인용(로그인) ──────────────────────────────────
