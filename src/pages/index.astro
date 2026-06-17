@@ -455,12 +455,18 @@ const social = {
             <img class="cc-logo" src="/sns/x-mark.svg" alt="" />
             <span class="cc-name">X</span>
           </div>
+          <!-- PC: X 공식 타임라인 임베드 -->
           <div class="cc-embed" id="x-embed">
             <a class="twitter-timeline"
                data-height="320"
                data-chrome="noheader nofooter noborders transparent"
                data-dnt="true"
                href={`https://twitter.com/${social.xHandle}`}>@{social.xHandle}</a>
+          </div>
+          <!-- 모바일: 임베드가 차단되는 경우가 많아 정적 카드로 표시 -->
+          <div class="cc-x-static">
+            <img class="x-big" src="/sns/x-mark.svg" alt="" />
+            <p class="cc-kakao-desc">법률 이슈와 생각을<br/>X(트위터)에서 만나보세요.</p>
           </div>
           <a class="cc-btn x-btn" href={`https://x.com/${social.xHandle}`}
              target="_blank" rel="noopener noreferrer">X에서 보기 →</a>
@@ -1086,6 +1092,18 @@ const social = {
     font-size: 0.85rem;
     padding: 1rem 0.3rem;
   }
+  /* X 정적 카드 (모바일 전용) — 기본은 숨김 */
+  .cc-x-static {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.4rem 0.95rem;
+    gap: 0.9rem;
+  }
+  .x-big { width: 52px; height: 52px; border-radius: 13px; }
 
   /* 카카오 본문 */
   .cc-kakao {
@@ -1132,6 +1150,10 @@ const social = {
 
   /* ── 모바일 전반 최적화 ───────────────────────────────── */
   @media (max-width: 640px) {
+    /* X: 모바일에서는 임베드 위젯이 차단되는 일이 많아 정적 카드로 교체 */
+    .cc-embed { display: none; }
+    .cc-x-static { display: flex; }
+
     /* 히어로: 여백 축소 */
     .hero { padding: 2.75rem 0 2.25rem; }
     .hero-sub { font-size: 0.74rem; margin-bottom: 0.9rem; }
