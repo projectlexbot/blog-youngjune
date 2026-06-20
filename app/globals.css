@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #faf6f0;
+  --bg-card: #fffdf9;
+  --bg-header: #fffdf9;
+  --text-main: #2c1a0e;
+  --text-sub: #7a5c44;
+  --text-muted: #b09880;
+  --accent: #8b5e3c;
+  --accent-light: #c4956a;
+  --border: #e8ddd0;
+  --border-soft: #f0e8de;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
+
+::selection {
+  background: #e8c9a8;
+}
+
+/* 글 본문 스타일 */
+.book-card {
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+}
+.book-card:hover {
+  transform: translateY(-10px) rotate(-1.5deg);
+  box-shadow: 8px 20px 40px rgba(44,26,14,0.22);
+}
+.book-card:hover .book-shine {
+  opacity: 1;
+}
+.book-shine {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.tiptap-view p { margin: 0 0 0.5em; }
+.tiptap-view p:empty { min-height: 1.5em; }
+.tiptap-view h1 { font-size: 1.8rem; font-weight: 800; margin: 1.2em 0 0.5em; }
+.tiptap-view h2 { font-size: 1.4rem; font-weight: 700; margin: 1.2em 0 0.5em; }
+.tiptap-view h3 { font-size: 1.1rem; font-weight: 700; margin: 1.2em 0 0.5em; }
+.tiptap-view ul, .tiptap-view ol { padding-left: 1.5em; margin: 0.5em 0; }
+.tiptap-view blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; color: var(--text-sub); margin: 1em 0; font-style: italic; }
+.tiptap-view hr { border: none; border-top: 1px solid var(--border); margin: 1.5em 0; }
+.tiptap-view a { color: var(--accent); text-decoration: underline; }
+.tiptap-view table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+.tiptap-view td, .tiptap-view th { border: 1px solid var(--border); padding: 0.5em 0.75em; }
+.tiptap-view th { background: var(--bg); font-weight: 700; }
+.tiptap-view img { max-width: 100%; border-radius: 8px; margin: 0.5em 0; }
+.tiptap-view code { background: var(--bg); padding: 0.1em 0.4em; border-radius: 4px; font-size: 0.88em; }
+.tiptap-view pre { background: #1e1e1e; color: #d4d4d4; padding: 1.2em; border-radius: 10px; overflow-x: auto; margin: 1em 0; }
