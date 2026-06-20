@@ -17,6 +17,8 @@ export interface Post {
   tags: string[] | null
   visibility: 'public' | 'members'
   published: boolean
+  thumbnail_url: string | null
+  excerpt: string | null
   author_id: string
   author?: Profile
   created_at: string
